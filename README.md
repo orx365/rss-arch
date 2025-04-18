@@ -6,7 +6,7 @@
 [![Get The Reeder App](https://img.shields.io/badge/feeeed-app-orange)](https://feeeed.nateparrott.com)
 
 
-![Last Updated](https://img.shields.io/github/last-commit/orx365/rss-arch.svg?label=Last%Updated)]
+![Last Updated](https://img.shields.io/github/last-commit/orx365/rss-arch.svg?label=Last_Updated)
 
 ## About
 
