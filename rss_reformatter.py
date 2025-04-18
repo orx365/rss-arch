@@ -26,6 +26,21 @@ def load_rss_items_from_file(file_path):
         root = tree.getroot()
         items = []
         for item in root.findall(".//item"):
+            # Process each item...
+            pass
+        return items
+    except ET.ParseError as e:
+        print(f"Error loading RSS feed from {file_path}: {e}")
+        return []
+    
+    if not os.path.exists(file_path):
+        return []
+
+    try:
+        tree = ET.parse(file_path)
+        root = tree.getroot()
+        items = []
+        for item in root.findall(".//item"):
             title = item.find("title").text
             link = item.find("link").text
             description = item.find("description").text
