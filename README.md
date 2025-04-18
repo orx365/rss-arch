@@ -1,15 +1,18 @@
-[![Access Financial Times Feed](https://img.shields.io/badge/Financial%20Times-Access%20Feed-blue)](https://raw.githubusercontent.com/orx365/rss-arch/main/output/ft-home.xml)
-[![Access The Economist Feed](https://img.shields.io/badge/The%20Economist-Access%20Feed-blue)](https://raw.githubusercontent.com/orx365/rss-arch/main/output/economist.xml)
+[![Access Financial Times Feed](https://img.shields.io/badge/Financial%20Times-Access%20Feed-blue)](.output/ft-home.xml)
+[![Access The Economist Feed](https://img.shields.io/badge/The%20Economist-Access%20Feed-blue)](.output/economist.xml)
 
 ## Available Feeds
 
 The following RSS feeds are currently processed by this project:
 
-- **[Financial Times](https://raw.githubusercontent.com/orx365/rss-arch/main/output/ft-home.xml)** via archive.is
-  Raw URL: `https://raw.githubusercontent.com/orx365/rss-arch/main/output/ft-home.xml`
+- **Financial Times (FT)**: [Access the Financial Times home feed](./output/ft-home.xml) via GitHub Pages
+  Raw URL: `.output/ft-home.xml`
+  GitHub Pages URL: `https://orx365.github.io/rss-arch/output/ft-home.xml`
 
-- **The Economist's](https://raw.githubusercontent.com/orx365/rss-arch/main/output/economist.xml)** via archive.is
-  Raw URL: `https://raw.githubusercontent.com/orx365/rss-arch/main/output/economist.xml`
+- **The Economist**: [Access The Economist's main feed](.output/economist.xml) via GitHub Pages
+  Raw URL: `.output/economist.xml`
+  GitHub Pages URL: `https://orx365.github.io/rss-arch/output/economist.xml`
+
 
 
 
