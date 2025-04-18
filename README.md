@@ -5,10 +5,10 @@
 
 The following RSS feeds are currently processed by this project:
 
-- **Financial Times (FT)**: [Access the Financial Times home feed](https://raw.githubusercontent.com/orx365/rss-arch/main/output/ft-home.xml) via archive.is
+- **[Financial Times](https://raw.githubusercontent.com/orx365/rss-arch/main/output/ft-home.xml)** via archive.is
   Raw URL: `https://raw.githubusercontent.com/orx365/rss-arch/main/output/ft-home.xml`
 
-- **The Economist**: [Access The Economist's main feed](https://raw.githubusercontent.com/orx365/rss-arch/main/output/economist.xml) via archive.is
+- **The Economist's](https://raw.githubusercontent.com/orx365/rss-arch/main/output/economist.xml)** via archive.is
   Raw URL: `https://raw.githubusercontent.com/orx365/rss-arch/main/output/economist.xml`
 
 
