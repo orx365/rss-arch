@@ -27,4 +27,4 @@ More detailed breakdown of news sources (into specific topics or parts of RSS fe
 
 ---
 
-rss-arch © 2025 by ore365 is licensed under CC BY-NC 4.0 
+rss-arch © 2025 by orx365 is licensed under CC BY-NC 4.0 
