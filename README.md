@@ -5,11 +5,11 @@
 
 The following RSS feeds are currently processed by this project:
 
-- **Financial Times (FT)**: [Access the Financial Times home feed](./output/ft-home.xml) via GitHub Pages
+- **[Financial Times - (FT)](./output/ft-home.xml)**
   Raw URL: `.output/ft-home.xml`
   GitHub Pages URL: `https://orx365.github.io/rss-arch/output/ft-home.xml`
 
-- **The Economist**: [Access The Economist's main feed](.output/economist.xml) via GitHub Pages
+- **[The Economist](.output/economist.xml)**
   Raw URL: `.output/economist.xml`
   GitHub Pages URL: `https://orx365.github.io/rss-arch/output/economist.xml`
 
