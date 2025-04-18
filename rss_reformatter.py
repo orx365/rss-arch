@@ -4,6 +4,7 @@ import PyRSS2Gen
 import datetime
 import argparse
 import os
+from urllib.parse import urlparse, urlunparse
 
 def create_reformatted_rss(original_url, output_file, target_domain=None, archive_prefix="https://archive.is/newest/"):
     """
@@ -29,12 +30,19 @@ def create_reformatted_rss(original_url, output_file, target_domain=None, archiv
         
         # 3. Prepare new RSS items
         new_rss_items = []
+        
         for entry in feed_data.entries:
             original_link = entry.get('link')
             
             # Process the link if it matches the target domain or if no target domain is specified
             if original_link and (target_domain is None or target_domain in original_link):
-                new_link = f"{archive_prefix}{original_link}"
+                # Parse the original link and remove query parameters
+                parsed_url = urlparse(original_link)
+                cleaned_link = urlunparse(parsed_url._replace(query="", fragment=""))  # Remove query and fragment
+                
+                # Prepend the archive prefix
+                new_link = f"{archive_prefix}{cleaned_link}"
+                
                 item_title = entry.get('title', 'No Title')
                 item_description = entry.get('summary', entry.get('description', 'No Description'))
                 item_guid_str = entry.get('id', new_link)
