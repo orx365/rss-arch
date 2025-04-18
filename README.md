@@ -11,8 +11,8 @@ The following RSS feeds are currently processed by this project:
 
   URL → `https://orx365.github.io/rss-arch/output/ft-home.xml`
 
-- **[The Economist](./output/economist.xml)**
-  (RSS follows the *Finance & Economic* topics)
+- **[The Economist](./output/economist.xml)** - (RSS follows the *Finance & Economic* topics)
+  
   URL →  `https://orx365.github.io/rss-arch/output/economist.xml`
 
 - **[The Atlantic](./output/atlantic.xml)**
