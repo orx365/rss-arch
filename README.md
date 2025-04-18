@@ -9,7 +9,7 @@ The following RSS feeds are currently processed by this project:
 
   GitHub Pages URL: `https://orx365.github.io/rss-arch/output/ft-home.xml`
 
-- **[The Economist](.output/economist.xml)**
+- **[The Economist](./output/economist.xml)**
 
   GitHub Pages URL: `https://orx365.github.io/rss-arch/output/economist.xml`
 
