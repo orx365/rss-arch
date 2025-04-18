@@ -6,7 +6,7 @@ on:
     # This runs at 6:00 UTC every day (adjust as needed) until 22:00 UTC every 2 hours
     # Adjust the cron expression as needed
     # - cron: '0 6-22/2 * * *'
-    - cron: '*/5 * * * *'
+    - cron: '* * * * *'
   # Optional: Allow manual triggering
   workflow_dispatch:
 
