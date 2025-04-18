@@ -31,7 +31,7 @@ The following RSS feeds are currently processed by this project:
 
 **Recommended RSS Readers** - [**Reeder**](https://reeder.app) and [**feeeed**](https://feeeed.nateparrott.com)
 
-More detailed breakdown of news sources (into specific topics or parts of RSS feeds) is in the works. It may however be simpler if you just [`clone this repo`](/colophon) and choose you own RSS feeds. A simple description of this project is available at [**colophon**](/colophon). It is propably the best and most efficent way for you to go forward. *Have fun*...
+More detailed breakdown of news sources (into specific topics or parts of RSS feeds) is in the works. It may however be simpler if you just [`clone this repo`](colophon) and choose you own RSS feeds. A simple description of this project is available at [**colophon**](colophon.md). It is propably the best and most efficent way for you to go forward. *Have fun*...
 
 ---
 
