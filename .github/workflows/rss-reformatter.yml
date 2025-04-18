@@ -1,0 +1,45 @@
+name: RSS Feed Reformatter
+
+# Set when the workflow will run
+on:
+  schedule:
+    # This runs at 6:00 UTC every day (adjust as needed)
+    - cron: '0 6 * * *'
+  # Optional: Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  reformat-rss:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests feedparser PyRSS2Gen
+        
+    - name: Run RSS reformatter
+      run: |
+        # Create output directory
+        mkdir -p output
+        
+        # Add your feeds here - examples for different sites
+        python rss_reformatter.py --url "https://www.ft.com/rss/home" --output "output/ft-home.xml" --domain "ft.com"
+        python rss_reformatter.py --url "https://www.economist.com/rss" --output "output/economist.xml" --domain "economist.com"
+        # Add more feeds as needed
+        
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git add output/
+        git commit -m "Update RSS feeds - $(date)" || echo "No changes to commit"
+        git pushs
