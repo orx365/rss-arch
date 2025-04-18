@@ -32,39 +32,6 @@ def load_rss_items_from_file(file_path):
     except ET.ParseError as e:
         print(f"Error loading RSS feed from {file_path}: {e}")
         return []
-    
-    if not os.path.exists(file_path):
-        return []
-
-    try:
-        tree = ET.parse(file_path)
-        root = tree.getroot()
-        items = []
-        for item in root.findall(".//item"):
-            title = item.find("title").text
-            link = item.find("link").text
-            description = item.find("description").text
-            guid = item.find("guid").text
-            pub_date = item.find("pubDate").text
-
-            # Replace 'GMT' with '+0000' to handle timezone
-            if pub_date and "GMT" in pub_date:
-                pub_date = pub_date.replace("GMT", "+0000")
-
-            # Parse pubDate
-            pub_date = datetime.datetime.strptime(pub_date, "%a, %d %b %Y %H:%M:%S %z")
-
-            items.append(PyRSS2Gen.RSSItem(
-                title=title,
-                link=link,
-                description=description,
-                guid=PyRSS2Gen.Guid(guid, isPermaLink=False),
-                pubDate=pub_date
-            ))
-        return items
-    except Exception as e:
-        print(f"Error loading RSS feed from {file_path}: {e}")
-        return []
 
 def create_reformatted_rss(original_url, output_file, archive_prefix="https://archive.is/newest/"):
     """
