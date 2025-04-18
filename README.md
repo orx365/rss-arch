@@ -7,7 +7,7 @@
 
 ## About
 
-This project automates the *fetching and reformatting of RSS feeds* from select news sources. The output bellow are formater **RSS feeds** one can add to a **RSS reader app**. The article links go through archive.is, so you can usually read them without a subscription. This project also automatically updates the links bellow **on a 2 hour basis so the RSS feeds update to have the latest info**. 
+This project automates the *fetching and reformatting of RSS feeds* from select news sources. The output bellow are formater **RSS feeds** one can add to a **RSS reader app**. The article links go through archive.is, so you can usually read them without a subscription. **Feeds get automatically updated on a 2 hour basis to feature the latest information.** 
 
 > **Disclaimer** : *Journalism plays a vital role in the healthy functioning of our society. This thought came to me during a time when I couldn't afford access to the media I relied on. I also have concerns about getting information from social media, since I believe there is a conflict of interest between the social media platform and the information provider. Please use this tool responsibly.*
 
