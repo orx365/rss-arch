@@ -36,9 +36,9 @@ https://www.economist.com/rss economist.xml output/economist.com
 https://www.theatlantic.com/feed/all/ output/atlantic.xml theatlantic.com
 ```
 
-- <feed_url>: The URL of the RSS feed.
-- <output_file>: The path where the reformatted RSS feed will be saved.
-- [<domain>] (optional): A domain filter to process only links from a specific domain.
+- `<feed_url>`: The URL of the RSS feed.
+- `<output_file>`: The path where the reformatted RSS feed will be saved.
+- `[<domain>]` (optional): A domain filter to process only links from a specific domain.
 
 
 ### 4. Run the Script Manually (Optional)**
