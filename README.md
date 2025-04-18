@@ -21,6 +21,10 @@ The following RSS feeds are currently processed by this project:
   URL →  `https://orx365.github.io/rss-arch/output/atlantic.xml`
 
 
-
+---
 
 More detailed breakdown of news sources (into specific topics or parts of RSS feeds) is in the works. It may however be simpler if you just [`clone this repo`](./colophon) and choose you own RSS feeds. A simple description of this project is available at [**colophon**](./colophon). It is propably the best and most efficent way for you to go forward. *Have fun*...
+
+---
+
+rss-arch © 2025 by ore365 is licensed under CC BY-NC 4.0 
