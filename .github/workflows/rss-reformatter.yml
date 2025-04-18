@@ -36,8 +36,7 @@ jobs:
         mkdir -p output
         
         # Add your feeds here - examples for different sites
-        python rss_reformatter.py --url "https://www.ft.com/myft/following/dcb550c0-d02b-46d7-a44a-294243b7f157.rss" --output "output/ft-home.xml" --domain "ft.com"
-        python rss_reformatter.py --url "http://www.economist.com/rss/finance_and_economics_rss.xml" --output "output/economist.xml" --domain "economist.com"
+        python3 rss_reformatter.py --feed-file feeds.txt
         # Add more feeds as needed
         
     - name: Commit and push changes
