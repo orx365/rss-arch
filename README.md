@@ -1,16 +1,17 @@
 [![Access Financial Times Feed](https://img.shields.io/badge/Financial%20Times-Access%20RSS-blue)](.output/ft-home.xml)
 [![Access The Economist Feed](https://img.shields.io/badge/The%20Economist-Access%20RSS-blue)](.output/economist.xml)
 [![Access The Atlantic Feed](https://img.shields.io/badge/The%20Atlantic-Access%20RSS-blue)](.output/atlantic.xml)
-[![Get The Reeder App](https://img.shields.io/badge/Reeder%20app-yellow)](https://reeder.app)
-[![Get The Reeder App](https://img.shields.io/badge/feeeed%20app-get-yellow)](https://feeeed.nateparrott.com)
+[![Get The Reeder App](https://img.shields.io/badge/Reeder%20app-green)](https://reeder.app)
+[![Get The Reeder App](https://img.shields.io/badge/feeeed%20app-green)](https://feeeed.nateparrott.com)
 
 
-## Available Feeds
+## About
 
-> This project automates the fetching and reformatting of RSS feeds from select news sources. The output bellow are formater RSS feeds one can add to a RSS reader app. akes the article links go through archive.is, so you can usually read them without a subscription. This project also automatically updates the links bellow on a 2 hour basis so the links remain relevant. 
+This project automates the fetching and reformatting of RSS feeds from select news sources. The output bellow are formater RSS feeds one can add to a RSS reader app. akes the article links go through archive.is, so you can usually read them without a subscription. This project also automatically updates the links bellow on a 2 hour basis so the links remain relevant. 
 
 > Disclaimer : *Journalism plays a vital role in the healthy functioning of our society. This thought came to me during a time when I couldn't afford access to the media I relied on. I also have concerns about getting information from social media, since I believe there is a conflict of interest between the social media platform and the information provider. Please use this tool responsibly.*
 
+## Available Feeds
 The following RSS feeds are currently processed by this project: 
 
 - **[Financial Times - (FT)](./output/ft-home.xml)**
