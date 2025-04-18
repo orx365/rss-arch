@@ -4,7 +4,7 @@ name: RSS Feed Reformatter
 on:
   schedule:
     # This runs at 6:00 UTC every day (adjust as needed)
-    - cron: '0 6 * * *'
+    - cron: '0 6-22/2 * * *'
   # Optional: Allow manual triggering
   workflow_dispatch:
 
