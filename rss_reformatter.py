@@ -94,21 +94,51 @@ def create_reformatted_rss(original_url, output_file, target_domain=None, archiv
         print(f"Error processing feed {original_url}: {e}")
         # Uncomment to fail on error: raise e
 
+def process_feeds_from_file(feed_file, archive_prefix="https://archive.is/newest/"):
+    """
+    Reads a file containing feed URLs and processes each feed.
+
+    Args:
+        feed_file (str): Path to the text file containing feed URLs and output paths.
+        archive_prefix (str): Prefix to prepend to original URLs.
+    """
+    try:
+        with open(feed_file, "r") as f:
+            for line in f:
+                # Skip empty lines or comments
+                if not line.strip() or line.startswith("#"):
+                    continue
+                
+                # Parse the line
+                parts = line.strip().split()
+                if len(parts) < 2:
+                    print(f"Invalid line in feed file: {line}")
+                    continue
+                
+                original_url = parts[0]
+                output_file = parts[1]
+                target_domain = parts[2] if len(parts) > 2 else None
+                
+                # Process the feed
+                create_reformatted_rss(
+                    original_url=original_url,
+                    output_file=output_file,
+                    target_domain=target_domain,
+                    archive_prefix=archive_prefix
+                )
+    except Exception as e:
+            print(f"Error reading feed file {feed_file}: {e}")
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Reformat RSS feed links to use archive service.')
-    parser.add_argument('--url', required=True, help='URL of the original RSS feed.')
-    parser.add_argument('--output', required=True, help='Path to save the generated XML file.')
-    parser.add_argument('--domain', help='Domain to filter for (e.g., "ft.com"). If not specified, all links will be processed.')
+    parser.add_argument('--feed-file', required=True, help='Path to the text file containing feed URLs and output paths.')
     parser.add_argument('--archive-prefix', default='https://archive.is/newest/', 
                         help='Prefix to prepend to original URLs (default: "https://archive.is/newest/")')
     
     args = parser.parse_args()
     
-    create_reformatted_rss(
-        args.url, 
-        args.output, 
-        target_domain=args.domain,
+    process_feeds_from_file(
+        feed_file=args.feed_file,
         archive_prefix=args.archive_prefix
     )
-
-    

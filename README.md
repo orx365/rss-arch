@@ -3,32 +3,23 @@
 
 ## Available Feeds
 
-The following RSS feeds are currently processed by this project:
+> This project automates the fetching and reformatting of RSS feeds from select news sources. The output bellow are formater RSS feeds one can add to a RSS reader app. akes the article links go through archive.is, so you can usually read them without a subscription. This project also automatically updates the links bellow on a 2 hour basis so the links remain relevant. 
+
+The following RSS feeds are currently processed by this project: 
 
 - **[Financial Times - (FT)](./output/ft-home.xml)**
 
-  GitHub Pages URL: `https://orx365.github.io/rss-arch/output/ft-home.xml`
+  URL → `https://orx365.github.io/rss-arch/output/ft-home.xml`
 
 - **[The Economist](./output/economist.xml)**
+  (RSS follows the *Finance & Economic* topics)
+  URL →  `https://orx365.github.io/rss-arch/output/economist.xml`
 
-  GitHub Pages URL: `https://orx365.github.io/rss-arch/output/economist.xml`
+- **[The Atlantic](./output/atlantic.xml)**
+
+  URL →  `https://orx365.github.io/rss-arch/output/atlantic.xml`
 
 
 
 
-# RSS Archive Reformatter
-
-This project automatically fetches RSS feeds from paywalled news sources and reformats the links to use archive.is for easier reading. Using GitHub Actions, it runs on a scheduled basis to keep feeds updated, making them accessible through any standard RSS reader. The reformatted feeds can be accessed directly from this repository's raw content URLs without requiring any frontend interface.
-
-The system is designed to be easily expandable to additional news sources beyond the initial configuration. By modifying the GitHub Action workflow file, you can add or remove sources as needed, or change the archiving service used for the links.
-
-## Setup Instructions
-
-1. Clone this repository
-2. Install dependencies: `pip install requests feedparser PyRSS2Gen`
-3. Run manually: `python rss_reformatter.py --url "[feed-url]" --output "output/[output-name].xml" --domain "[domain]"`
-4. Or let the GitHub Action run automatically according to the schedule
-
-## Usage
-
-Simply add the raw URLs listed above to your preferred RSS reader app or service. The feeds will update according to the GitHub Action schedule (currently set to run hourly).
+More detailed breakdown of news sources (into specific topics or parts of RSS feeds) is in the works. It may however be siimpler if you just `clone this repo` and choose you own RSS feeds. A simple description of this project is available at `[The Economist](./colophon)`It is propably the best and most efficent way for you to go forward. *Have fun*...

@@ -1,0 +1,3 @@
+https://www.ft.com/myft/following/dcb550c0-d02b-46d7-a44a-294243b7f157.rss output/ft-home.xml ft.com
+http://www.economist.com/rss/finance_and_economics_rss.xml output/economist.xml economist.com
+http://feeds.feedburner.com/TheAtlantic output/atlantic.xml theatlantic.com
