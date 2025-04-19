@@ -23,11 +23,11 @@ The following RSS feeds are currently processed by this project:
   
   URL →  `https://orx365.github.io/rss-arch/output/economist.xml`
 
-- **The Wall Street Journal** →  [`World News`](./output/wsj_world.xml) and [`Economy`](./output/wsj_econ.xml)
+- **The Wall Street Journal** →  [`World News`](./output/wsj_world.xml) , [`Economy`](./output/wsj_econ.xml)
 
-  World News →  [`https://orx365.github.io/rss-arch/output/wsj_world.xml`](./output/wsj_world.xml)
+  World News →  `https://orx365.github.io/rss-arch/output/wsj_world.xml`
   
-  Economy →  [`https://orx365.github.io/rss-arch/output/wsj_econ.xml`](./output/wsj_econ.xml)
+  Economy →  `https://orx365.github.io/rss-arch/output/wsj_econ.xml`
 
 - **[The Atlantic](http://feeds.feedburner.com/TheAtlantic)** - Available withou need to run thru `archive.is`.
 
