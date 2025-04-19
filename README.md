@@ -6,7 +6,7 @@
 [![Get The Reeder App](https://img.shields.io/badge/Reeder-app-orange)](https://reeder.app)
 [![Get The Reeder App](https://img.shields.io/badge/feeeed-app-orange)](https://feeeed.nateparrott.com)
 
-https://orx365.github.io/rss-arch/#available-feeds
+
 ## About
 
 This project automates the *fetching and reformatting of RSS feeds* from select news sources. The output bellow are formater **RSS feeds** one can add to a **RSS reader app**. The article links go through archive.is, so you can usually read them without a subscription. **Feeds get automatically updated on a 2 hour basis to feature the latest information.** 
