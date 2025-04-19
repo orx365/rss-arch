@@ -29,7 +29,7 @@ The following RSS feeds are currently processed by this project:
   
   Economy →  `https://orx365.github.io/rss-arch/output/wsj_econ.xml`
 
-- **[The Atlantic](http://feeds.feedburner.com/TheAtlantic)** - Available withou need to run thru `archive.is`.
+- **[The Atlantic](http://feeds.feedburner.com/TheAtlantic)** - Available without `archive.is`
 
 ---
 
