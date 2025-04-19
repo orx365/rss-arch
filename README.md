@@ -6,8 +6,6 @@
 [![Get The Reeder App](https://img.shields.io/badge/feeeed-app-orange)](https://feeeed.nateparrott.com)
 
 
-![Feeds Updated](https://img.shields.io/github/last-commit/orx365/rss-arch.svg?label=Feeds%20Updated)
-
 ## About
 
 This project automates the *fetching and reformatting of RSS feeds* from select news sources. The output bellow are formater **RSS feeds** one can add to a **RSS reader app**. The article links go through archive.is, so you can usually read them without a subscription. **Feeds get automatically updated on a 2 hour basis to feature the latest information.** 
@@ -15,6 +13,7 @@ This project automates the *fetching and reformatting of RSS feeds* from select 
 > **Disclaimer** : *Journalism plays a vital role in the healthy functioning of our society. This thought came to me during a time when I couldn't afford access to the media I relied on. I also have concerns about getting information from social media, since I believe there is a conflict of interest between the social media platform and the information provider. Please use this tool responsibly.*
 
 ## Available Feeds
+![Feeds Updated](https://img.shields.io/github/last-commit/orx365/rss-arch.svg?label=Feeds%20Updated)
 The following RSS feeds are currently processed by this project: 
 
 - **[Financial Times - (FT)](./output/ft-home.xml)**
