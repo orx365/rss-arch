@@ -6,8 +6,7 @@ import argparse
 import os
 from urllib.parse import urlparse, urlunparse
 import re
-
-from xml.etree import ElementTree as ET
+import xml.etree.ElementTree as ET
 
 def load_rss_items_from_file(file_path):
     """
@@ -94,6 +93,15 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
         response = requests.get(original_url, headers=headers, timeout=20)
         response.raise_for_status()
         feed_data = feedparser.parse(response.content)
+        
+        # Store the feed image information
+        feed_image = None
+        if 'image' in feed_data.feed:
+            feed_image = PyRSS2Gen.Image(
+                url=feed_data.feed.image.get('url', ''),
+                title=feed_data.feed.image.get('title', ''),
+                link=feed_data.feed.image.get('link', '')
+            )
 
         # 2. Load existing RSS items
         existing_items = load_rss_items_from_file(output_file)
@@ -113,57 +121,73 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
                 item_title = entry.get('title', 'No Title')
                 item_description = entry.get('summary', entry.get('description', 'No Description'))
                 
-                # Extract header image
+                # Extract media content (header image)
                 image_url = None
                 
-                # Check for media:content or media:thumbnail
-                if 'media_content' in entry and entry.media_content:
+                # Check for media:content
+                if hasattr(entry, 'media_content') and entry.media_content:
                     for media in entry.media_content:
                         if 'url' in media:
                             image_url = media['url']
                             break
                 
                 # Check for media:thumbnail
-                if not image_url and 'media_thumbnail' in entry and entry.media_thumbnail:
+                if not image_url and hasattr(entry, 'media_thumbnail') and entry.media_thumbnail:
                     for media in entry.media_thumbnail:
                         if 'url' in media:
                             image_url = media['url']
                             break
                 
-                # Check for enclosures (often used for images)
-                if not image_url and 'enclosures' in entry and entry.enclosures:
+                # Check for enclosures
+                if not image_url and hasattr(entry, 'enclosures') and entry.enclosures:
                     for enclosure in entry.enclosures:
                         if 'url' in enclosure and enclosure.get('type', '').startswith('image/'):
                             image_url = enclosure['url']
                             break
                 
-                # Try to extract from content if still no image
+                # Try to extract from content
+                if not image_url and 'content' in entry and entry.content:
+                    for content_item in entry.content:
+                        if 'value' in content_item:
+                            extracted_img = extract_image_from_content(content_item['value'])
+                            if extracted_img:
+                                image_url = extracted_img
+                                break
+                
+                # Try to extract from summary if still no image
                 if not image_url:
-                    content = entry.get('content', [{'value': ''}])[0].get('value', '')
-                    if not content:
-                        content = item_description
-                    image_url = extract_image_from_content(content)
+                    image_url = extract_image_from_content(item_description)
                 
                 # Add image to description if found
                 if image_url:
                     item_description = f'<img src="{image_url}" style="max-width:100%; height:auto; display:block; margin-bottom:15px;" />\n{item_description}'
                 
-                item_guid_str = entry.get('id', new_link)
-
-                published_time_struct = entry.get('published_parsed')
-                item_pub_date = (
-                    datetime.datetime(*published_time_struct[:6], tzinfo=datetime.timezone.utc)
-                    if published_time_struct
-                    else datetime.datetime.now(datetime.timezone.utc)
-                )
-
-                new_items.append(PyRSS2Gen.RSSItem(
-                    title=item_title,
-                    link=new_link,
-                    description=item_description,
-                    guid=PyRSS2Gen.Guid(item_guid_str, isPermaLink=False),
-                    pubDate=item_pub_date
-                ))
+                # Get author if available
+                author = None
+                if 'author' in entry:
+                    author = entry.author
+                elif 'dc_creator' in entry:
+                    author = entry.dc_creator
+                
+                # Create the RSS item with all available information
+                item_kwargs = {
+                    "title": item_title,
+                    "link": new_link,
+                    "description": item_description,
+                    "guid": PyRSS2Gen.Guid(entry.get('id', new_link), isPermaLink=False),
+                }
+                
+                # Add publication date if available
+                if 'published_parsed' in entry and entry.published_parsed:
+                    item_kwargs["pubDate"] = datetime.datetime(*entry.published_parsed[:6], tzinfo=datetime.timezone.utc)
+                else:
+                    item_kwargs["pubDate"] = datetime.datetime.now(datetime.timezone.utc)
+                    
+                # Add author if available
+                if author:
+                    item_kwargs["author"] = author
+                    
+                new_items.append(PyRSS2Gen.RSSItem(**item_kwargs))
 
         # 4. Merge and remove duplicates
         all_items = {item.guid.guid: item for item in (new_items + existing_items)}.values()
@@ -171,14 +195,28 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
         # 5. Sort by pubDate and truncate to 100 items
         sorted_items = sorted(all_items, key=lambda x: x.pubDate, reverse=True)[:100]
 
-        # 6. Build the new RSS feed
-        new_rss_feed = PyRSS2Gen.RSS2(
-            title=feed_data.feed.get('title', 'Feed'),
-            link=original_url,
-            description=feed_data.feed.get('description', 'Reformatted Feed'),
-            lastBuildDate=datetime.datetime.now(datetime.timezone.utc),
-            items=sorted_items
-        )
+        # 6. Build the new RSS feed with the original feed image
+        rss_kwargs = {
+            "title": feed_data.feed.get('title', 'Feed'),
+            "link": original_url,
+            "description": feed_data.feed.get('description', 'Reformatted Feed'),
+            "lastBuildDate": datetime.datetime.now(datetime.timezone.utc),
+            "items": sorted_items,
+        }
+        
+        # Add the image if one was found
+        if feed_image:
+            rss_kwargs["image"] = feed_image
+            
+        # Add language if available
+        if 'language' in feed_data.feed:
+            rss_kwargs["language"] = feed_data.feed.language
+            
+        # Add copyright if available
+        if 'rights' in feed_data.feed:
+            rss_kwargs["copyright"] = feed_data.feed.rights
+            
+        new_rss_feed = PyRSS2Gen.RSS2(**rss_kwargs)
 
         # 7. Save the new RSS feed to file
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
