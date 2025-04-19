@@ -1,4 +1,4 @@
-name: RSS Feed Reformatter
+name: RSS Feed Update
 
 # Set when the workflow will run
 on:

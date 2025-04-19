@@ -1,0 +1,38 @@
+name: GitHub Pages - Build and Deploy
+
+on:
+  push:
+    branches: [main] # Or your default branch
+    paths-ignore:
+      - 'output/**'       # Ignore changes in the output folder
+
+  workflow_dispatch: # Optional: Allows manual triggering
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4 # Using the latest checkout action
+
+      - name: Set up Ruby and Jekyll
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '3.x' # Or the Ruby version your Jekyll site uses
+          bundler-cache: true
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: .
+          destination: ./_site
+          future: false
+          build_revision: ${{ github.sha }}
+          verbose: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
+          folder: _site # Jekyll builds the site into the _site folder
