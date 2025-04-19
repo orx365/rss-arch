@@ -36,11 +36,14 @@ jobs:
           verbose: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: _site
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          # The deploy-pages action automatically uploads the content
-          # from the specified folder (which should be the output of your build).
           artifact_name: github-pages
-          folder: _site # Jekyll builds the site into the _site folder
