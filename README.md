@@ -23,7 +23,7 @@ The following RSS feeds are currently processed by this project:
   
   URL →  `https://orx365.github.io/rss-arch/output/economist.xml`
 
-- **[The Wall Street Journal]()** →  [`World News`](./output/wsj_world.xml) & [`Economy`](./output/wsj_econ.xml)
+- **[The Wall Street Journal]()** →  [`World News`](./output/wsj_world.xml) and [`Economy`](./output/wsj_econ.xml)
 
   World News →  [`https://orx365.github.io/rss-arch/output/wsj_world.xml`](./output/wsj_world.xml)
   
