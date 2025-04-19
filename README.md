@@ -7,7 +7,6 @@
 
 
 ![Last Updated](https://img.shields.io/github/last-commit/orx365/rss-arch.svg?label=Last%20Updated)
-[![RSS Feed Update](https://github.com/orx365/rss-arch/actions/workflows/rss-reformatter.yml/badge.svg)](https://github.com/orx365/rss-arch/actions/workflows/rss-reformatter.yml)
 
 ## About
 
