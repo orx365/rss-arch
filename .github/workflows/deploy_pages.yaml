@@ -24,8 +24,7 @@ jobs:
       - name: Set up Ruby and Jekyll
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.x'
-          bundler-cache: true
+          ruby-version: '3.3.8'
        
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
