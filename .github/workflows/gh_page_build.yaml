@@ -10,18 +10,8 @@ on:
 
 permissions:
   id-token: write 
-  contents: write
-  pages: write
-
-permissions:
-  id-token: write
-  pages: write
   contents: read
-
-permissions:
-  id-token: write
   pages: write
-  contents: read
 
 jobs:
   deploy:
