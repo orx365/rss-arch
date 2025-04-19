@@ -19,6 +19,7 @@ jobs:
 
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout
@@ -28,7 +29,7 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: '3.x' # Or the Ruby version your Jekyll site uses
-          cache: bundler # Corrected syntax for bundler cache
+          cache: bundler
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
@@ -40,17 +41,29 @@ jobs:
           verbose: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check for symlinks
+        run: |
+          echo "Checking for symlinks in _site directory"
+          find _site -type l || echo "No symlinks found"
+
+      - name: Remove problematic files
+        run: |
+          # Remove potential problematic files
+          rm -f _site/output/* || true
+          rm -f _site/rss_reformatter.py || true
+          find _site -type l -delete || true
+          
       - name: List _site contents
         run: ls -al _site
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
       - name: Upload GitHub Pages artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
           path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: github-pages
