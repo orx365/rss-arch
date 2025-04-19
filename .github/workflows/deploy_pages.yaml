@@ -14,7 +14,8 @@ permissions:
   pages: write
 
 jobs:
-  deploy:
+  build_and_deploy:
+    name: Build and Deploy to GitHub Pages
     runs-on: ubuntu-latest
 
     environment:
