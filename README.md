@@ -17,11 +17,11 @@ The following RSS feeds are currently processed by this project:
 
 - **[Financial Times - (FT)](./output/ft-home.xml)**
 
-  URL → `https://orx365.github.io/rss-arch/output/ft-home.xml`
+  URL → [`https://orx365.github.io/rss-arch/output/ft-home.xml`](./output/ft-home.xml)
 
 - **[The Economist](./output/economist.xml)** - (RSS follows the *Finance & Economic* topics)
   
-  URL →  `https://orx365.github.io/rss-arch/output/economist.xml`
+  URL →  [`https://orx365.github.io/rss-arch/output/economist.xml`](./output/economist.xml)
 
 - **[The Wall Street Journal](./output/wsj_world.xml)**
 
@@ -29,9 +29,7 @@ The following RSS feeds are currently processed by this project:
   
   Economy →  [`https://orx365.github.io/rss-arch/output/wsj_econ.xml`](./output/wsj_econ.xml)
 
-- **[The Atlantic](http://feeds.feedburner.com/TheAtlantic)**
-
-  Available withou need to run thru `archive.is`.
+- **[The Atlantic](http://feeds.feedburner.com/TheAtlantic)** - Available withou need to run thru `archive.is`.
 
 ---
 
