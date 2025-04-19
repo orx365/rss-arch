@@ -10,11 +10,19 @@ from xml.sax.saxutils import escape
 
 def get_feed_logo(feed_data):
     """Extracts the feed logo information."""
+    # Prioritize the <image> tag
     if 'image' in feed_data.feed and 'url' in feed_data.feed.image:
         return PyRSS2Gen.Image(
             url=feed_data.feed.image.url,
             title=feed_data.feed.image.get('title', feed_data.feed.get('title', '')),
             link=feed_data.feed.image.get('link', feed_data.feed.get('link', ''))
+        )
+    # Fallback to <icon> if <image> is not present
+    elif 'icon' in feed_data.feed:
+         return PyRSS2Gen.Image(
+            url=feed_data.feed.icon,
+            title=feed_data.feed.get('title', ''), # Use feed title as fallback
+            link=feed_data.feed.get('link', '') # Use feed link as fallback
         )
     return None
 
@@ -49,6 +57,7 @@ def extract_image_and_credit(entry):
     # Priority 4: Image tag in content or summary
     content_html = ''
     if 'content' in entry and entry.content:
+        # Use the first content item if multiple exist
         content_html = entry.content[0].get('value', '')
     if not content_html:
         content_html = entry.get('summary', entry.get('description', ''))
@@ -64,28 +73,78 @@ def extract_image_and_credit(entry):
 
     return None, None
 
-def add_media_tags_to_xml(xml_string, media_data):
-    """Adds media namespace and media:content tags to the generated XML."""
-    # Add media namespace
-    xml_string = xml_string.replace(
-        '<rss version="2.0">',
-        '<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">',
-        1
-    )
+def post_process_xml(xml_string, media_data, author_data):
+    """Adds namespaces and custom tags (media:content, dc:creator) to the XML."""
+    # Add namespaces if not already present
+    if 'xmlns:media=' not in xml_string:
+        xml_string = xml_string.replace(
+            '<rss version="2.0">',
+            '<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">',
+            1
+        )
+    if 'xmlns:dc=' not in xml_string:
+        xml_string = xml_string.replace(
+            '<rss version="2.0"', # Find the start, might already have media namespace
+            '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"',
+            1
+        )
 
-    # Add media:content tags within each item
-    for guid, (url, credit) in media_data.items():
-        guid_tag = f'<guid isPermaLink="false">{guid}</guid>'
-        guid_pos = xml_string.find(guid_tag)
-        if guid_pos != -1:
-            insert_pos = guid_pos + len(guid_tag)
-            media_tag = f'\n      <media:content url="{escape(url)}" medium="image" type="image/jpeg">'
-            if credit:
-                media_tag += f'\n        <media:credit>{escape(credit)}</media:credit>\n      '
-            media_tag += '</media:content>'
-            xml_string = xml_string[:insert_pos] + media_tag + xml_string[insert_pos:]
 
-    return xml_string
+    processed_xml = ""
+    last_pos = 0
+
+    # Split by item tags to process each one
+    item_starts = [m.start() for m in re.finditer('<item>', xml_string)]
+    item_ends = [m.end() for m in re.finditer('</item>', xml_string)]
+
+    if not item_starts or len(item_starts) != len(item_ends):
+        # Fallback if item splitting fails, just add namespaces
+        return xml_string
+
+    for i, start in enumerate(item_starts):
+        end = item_ends[i]
+        item_xml = xml_string[start:end]
+        processed_xml += xml_string[last_pos:start] # Add content before this item
+
+        # Find GUID within this item
+        guid_match = re.search(r'<guid isPermaLink="false">(.*?)</guid>', item_xml)
+        if guid_match:
+            guid = guid_match.group(1) # Note: This GUID is already escaped by PyRSS2Gen
+
+            # --- Add dc:creator ---
+            if guid in author_data:
+                author_name = author_data[guid]
+                # Insert dc:creator after pubDate or guid if pubDate is missing
+                insert_marker = '</pubDate>'
+                insert_pos = item_xml.find(insert_marker)
+                if insert_pos == -1:
+                    insert_marker = '</guid>' # Fallback to inserting after guid
+                    insert_pos = item_xml.find(insert_marker)
+
+                if insert_pos != -1:
+                    insert_point = insert_pos + len(insert_marker)
+                    creator_tag = f'\n      <dc:creator>{escape(author_name)}</dc:creator>'
+                    item_xml = item_xml[:insert_point] + creator_tag + item_xml[insert_point:]
+
+            # --- Add media:content ---
+            if guid in media_data:
+                url, credit = media_data[guid]
+                # Insert media:content before closing </item>
+                media_tag = f'\n      <media:content url="{escape(url)}" medium="image" type="image/jpeg">'
+                if credit:
+                    media_tag += f'\n        <media:credit>{escape(credit)}</media:credit>\n      '
+                media_tag += '</media:content>\n    ' # Add newline and indent for </item>
+                item_xml = item_xml.replace('</item>', media_tag + '</item>', 1)
+
+        processed_xml += item_xml
+        last_pos = end
+
+    processed_xml += xml_string[last_pos:] # Add any remaining content after the last item
+
+    return processed_xml
+
+
+
 
 def create_reformatted_rss(original_url, output_file, archive_prefix="https://archive.is/newest/"):
     """Fetches, parses, and reformats a single RSS feed."""
@@ -103,9 +162,11 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
         # 3. Process Feed Items
         rss_items = []
         media_data = {} # Store media info: {guid: (url, credit)}
+        author_data = {} # Store author info: {guid: author_name}
         processed_guids = set()
 
         for entry in feed_data.entries:
+            # ... (rest of the item processing loop remains the same) ...
             original_link = entry.get('link')
             if not original_link:
                 continue
@@ -124,6 +185,7 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
             # Extract image and credit
             image_url, image_credit = extract_image_and_credit(entry)
             if image_url:
+                # Use the unescaped guid_text as the key
                 media_data[guid_text] = (image_url, image_credit)
 
             # Get publication date
@@ -131,36 +193,52 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
             if 'published_parsed' in entry and entry.published_parsed:
                 pub_date = datetime.datetime(*entry.published_parsed[:6], tzinfo=datetime.timezone.utc)
 
-            # Create RSS Item
+            # --- Author Extraction ---
+            author_name = None
+            if hasattr(entry, 'dc_creator'):
+                author_name = entry.dc_creator
+            elif hasattr(entry, 'author'):
+                author_name = entry.author
+            if author_name:
+                 # Use the unescaped guid_text as the key
+                author_data[guid_text] = author_name
+            # --- End Author Extraction ---
+
+            # Create RSS Item (WITHOUT author)
             rss_item = PyRSS2Gen.RSSItem(
                 title=entry.get('title', 'No Title'),
                 link=archived_link,
                 description=entry.get('summary', entry.get('description', '')),
                 guid=PyRSS2Gen.Guid(guid_text, isPermaLink=False),
-                pubDate=pub_date,
-                author=entry.get('author')
+                pubDate=pub_date
+                # No author argument here
             )
             rss_items.append(rss_item)
 
-        # Limit to latest 100 items (optional, if needed)
+
+        # Limit to latest 100 items
         rss_items.sort(key=lambda x: x.pubDate, reverse=True)
         rss_items = rss_items[:100]
 
         # 4. Build Basic RSS Feed
+        # Use feed_data.feed.link for the main channel link if available
+        channel_link = feed_data.feed.get('link', original_url)
+
         rss_feed = PyRSS2Gen.RSS2(
             title=feed_data.feed.get('title', 'Reformatted Feed'),
-            link=original_url,
+            link=channel_link, # Use the extracted website link here
             description=feed_data.feed.get('description', ''),
             lastBuildDate=datetime.datetime.now(datetime.timezone.utc),
             items=rss_items,
-            image=feed_logo, # Add the logo here
+            image=feed_logo,
             language=feed_data.feed.get('language'),
             copyright=feed_data.feed.get('rights', feed_data.feed.get('copyright'))
         )
 
-        # 5. Generate XML and Add Media Tags
+        # 5. Generate XML and Post-Process (Add Media and DC Creator)
         base_xml = rss_feed.to_xml(encoding='utf-8')
-        final_xml = add_media_tags_to_xml(base_xml, media_data)
+        # Pass author_data to the post-processing function
+        final_xml = post_process_xml(base_xml, media_data, author_data)
 
         # 6. Save the Feed
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
@@ -173,6 +251,8 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
         print(f"Error fetching feed {original_url}: {e}")
     except Exception as e:
         print(f"Error processing feed {original_url}: {e}")
+
+
 
 def process_feeds_from_file(feed_file, archive_prefix):
     """Reads feed URLs from a file and processes each."""
