@@ -146,7 +146,9 @@ def post_process_xml(xml_string, media_data, author_data):
 
 
 
-def create_reformatted_rss(original_url, output_file, archive_prefix="https://archive.is/newest/"):
+
+# Modify the signature to accept base_domain
+def create_reformatted_rss(original_url, output_file, base_domain, archive_prefix="https://archive.is/newest/"):
     """Fetches, parses, and reformats a single RSS feed."""
     print(f"Processing feed: {original_url}")
     try:
@@ -160,13 +162,13 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
         feed_logo = get_feed_logo(feed_data)
 
         # 3. Process Feed Items
+        # ... (item processing loop remains the same) ...
         rss_items = []
         media_data = {} # Store media info: {guid: (url, credit)}
         author_data = {} # Store author info: {guid: author_name}
         processed_guids = set()
 
         for entry in feed_data.entries:
-            # ... (rest of the item processing loop remains the same) ...
             original_link = entry.get('link')
             if not original_link:
                 continue
@@ -221,12 +223,14 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
         rss_items = rss_items[:100]
 
         # 4. Build Basic RSS Feed
-        # Use feed_data.feed.link for the main channel link if available
-        channel_link = feed_data.feed.get('link', original_url)
+        # Construct the channel link from the provided base_domain
+        channel_link = base_domain
+        if not channel_link.startswith(('http://', 'https://')):
+            channel_link = 'https://' + channel_link # Default to https
 
         rss_feed = PyRSS2Gen.RSS2(
             title=feed_data.feed.get('title', 'Reformatted Feed'),
-            link=channel_link, # Use the extracted website link here
+            link=channel_link, # Use the link derived from feeds.txt
             description=feed_data.feed.get('description', ''),
             lastBuildDate=datetime.datetime.now(datetime.timezone.utc),
             items=rss_items,
@@ -253,7 +257,6 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
         print(f"Error processing feed {original_url}: {e}")
 
 
-
 def process_feeds_from_file(feed_file, archive_prefix):
     """Reads feed URLs from a file and processes each."""
     if not os.path.exists(feed_file):
@@ -268,15 +271,19 @@ def process_feeds_from_file(feed_file, archive_prefix):
                     continue
 
                 parts = line.split()
-                if len(parts) < 2:
-                    print(f"Warning: Skipping invalid line {line_num} in {feed_file}: {line}")
+                # Expecting 3 parts: URL, output file, base domain
+                if len(parts) < 3:
+                    print(f"Warning: Skipping invalid line {line_num} in {feed_file} (expected URL, output_file, base_domain): {line}")
                     continue
 
-                original_url, output_file = parts[0], parts[1]
-                create_reformatted_rss(original_url, output_file, archive_prefix)
+                original_url, output_file, base_domain = parts[0], parts[1], parts[2]
+                # Pass base_domain to the processing function
+                create_reformatted_rss(original_url, output_file, base_domain, archive_prefix)
 
     except Exception as e:
         print(f"Error reading or processing feed file {feed_file}: {e}")
+
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Fetch, reformat, and archive RSS feed links.')
