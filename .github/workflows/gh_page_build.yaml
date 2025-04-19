@@ -13,12 +13,22 @@ permissions:
   contents: write
   pages: write
 
+permissions:
+  id-token: write
+  pages: write
+  contents: read
+
+permissions:
+  id-token: write
+  pages: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4 # Using the latest checkout action
+        uses: actions/checkout@v4
 
       - name: Set up Ruby and Jekyll
         uses: actions/setup-ruby@v1
@@ -37,7 +47,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
         with:
+          # The deploy-pages action automatically uploads the content
+          # from the specified folder (which should be the output of your build).
           artifact_name: github-pages
           folder: _site # Jekyll builds the site into the _site folder
