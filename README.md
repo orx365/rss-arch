@@ -1,12 +1,12 @@
 [![website](https://img.shields.io/badge/Github_Page-grey)](https://orx365.github.io/rss-arch/)
-![Feeds Updated](https://img.shields.io/github/last-commit/orx365/rss-arch.svg?label=Feeds%20Updated)
+[![Feeds Updated](https://img.shields.io/github/last-commit/orx365/rss-arch.svg?label=Feeds%20Updated)](#available-feeds)
 [![Access Financial Times Feed](https://img.shields.io/badge/Financial%20Times-Access%20RSS-blue)](output/ft-home.xml)
 [![Access The Economist Feed](https://img.shields.io/badge/The%20Economist-Access%20RSS-blue)](output/economist.xml)
 [![Access The Atlantic Feed](https://img.shields.io/badge/The%20Atlantic-Access%20RSS-blue)](output/atlantic.xml)
 [![Get The Reeder App](https://img.shields.io/badge/Reeder-app-orange)](https://reeder.app)
 [![Get The Reeder App](https://img.shields.io/badge/feeeed-app-orange)](https://feeeed.nateparrott.com)
 
-
+https://orx365.github.io/rss-arch/#available-feeds
 ## About
 
 This project automates the *fetching and reformatting of RSS feeds* from select news sources. The output bellow are formater **RSS feeds** one can add to a **RSS reader app**. The article links go through archive.is, so you can usually read them without a subscription. **Feeds get automatically updated on a 2 hour basis to feature the latest information.** 
