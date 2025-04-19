@@ -25,9 +25,9 @@ The following RSS feeds are currently processed by this project:
 
 - **[The Wall Street Journal](./output/wsj_world.xml)**
 
-  **World News** →  [`https://orx365.github.io/rss-arch/output/wsj_world.xml`](./output/wsj_world.xml)
+  World News →  [`https://orx365.github.io/rss-arch/output/wsj_world.xml`](./output/wsj_world.xml)
   
-  **Economy** →  [`https://orx365.github.io/rss-arch/output/wsj_econ.xml`](./output/wsj_econ.xml)
+  Economy →  [`https://orx365.github.io/rss-arch/output/wsj_econ.xml`](./output/wsj_econ.xml)
 
 - **[The Atlantic](http://feeds.feedburner.com/TheAtlantic)**
 
