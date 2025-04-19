@@ -1,4 +1,5 @@
 [![website](https://img.shields.io/badge/Github_Page-grey)](https://orx365.github.io/rss-arch/)
+![Feeds Updated](https://img.shields.io/github/last-commit/orx365/rss-arch.svg?label=Feeds%20Updated)
 [![Access Financial Times Feed](https://img.shields.io/badge/Financial%20Times-Access%20RSS-blue)](output/ft-home.xml)
 [![Access The Economist Feed](https://img.shields.io/badge/The%20Economist-Access%20RSS-blue)](output/economist.xml)
 [![Access The Atlantic Feed](https://img.shields.io/badge/The%20Atlantic-Access%20RSS-blue)](output/atlantic.xml)
@@ -13,7 +14,7 @@ This project automates the *fetching and reformatting of RSS feeds* from select 
 > **Disclaimer** : *Journalism plays a vital role in the healthy functioning of our society. This thought came to me during a time when I couldn't afford access to the media I relied on. I also have concerns about getting information from social media, since I believe there is a conflict of interest between the social media platform and the information provider. Please use this tool responsibly.*
 
 ## Available Feeds
-![Feeds Updated](https://img.shields.io/github/last-commit/orx365/rss-arch.svg?label=Feeds%20Updated)
+
 The following RSS feeds are currently processed by this project: 
 
 - **[Financial Times - (FT)](./output/ft-home.xml)**
