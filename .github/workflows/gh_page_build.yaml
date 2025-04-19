@@ -9,6 +9,7 @@ on:
   workflow_dispatch: # Optional: Allows manual triggering
 
 permissions:
+  id-token: write 
   contents: write
   pages: write
 
