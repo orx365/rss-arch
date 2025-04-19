@@ -150,7 +150,7 @@ def post_process_xml(xml_string, media_data, author_data):
 # Modify the signature to accept base_domain
 def create_reformatted_rss(original_url, output_file, base_domain, archive_prefix="https://archive.is/newest/"):
     """Fetches, parses, and reformats a single RSS feed."""
-    print(f"Processing feed: {original_url}")
+    print(f"\nProcessing feed: {original_url}")
     try:
         # 1. Fetch and Parse Feed
         headers = {'User-Agent': 'RSS Reformatter Bot (Python)'}
