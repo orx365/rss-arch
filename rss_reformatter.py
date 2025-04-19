@@ -5,6 +5,7 @@ import datetime
 import argparse
 import os
 from urllib.parse import urlparse, urlunparse
+import re
 
 from xml.etree import ElementTree as ET
 
@@ -26,12 +27,54 @@ def load_rss_items_from_file(file_path):
         root = tree.getroot()
         items = []
         for item in root.findall(".//item"):
-            # Process each item...
-            pass
+            title_elem = item.find("title")
+            link_elem = item.find("link")
+            desc_elem = item.find("description")
+            guid_elem = item.find("guid")
+            pubDate_elem = item.find("pubDate")
+            
+            # Parse the publication date
+            pub_date = None
+            if pubDate_elem is not None and pubDate_elem.text:
+                try:
+                    time_tuple = feedparser._parse_date(pubDate_elem.text)
+                    if time_tuple:
+                        pub_date = datetime.datetime(*time_tuple[:6], tzinfo=datetime.timezone.utc)
+                except:
+                    pub_date = datetime.datetime.now(datetime.timezone.utc)
+            
+            if title_elem is not None and link_elem is not None:
+                rss_item = PyRSS2Gen.RSSItem(
+                    title=title_elem.text or "No Title",
+                    link=link_elem.text or "",
+                    description=desc_elem.text if desc_elem is not None else "",
+                    guid=PyRSS2Gen.Guid(guid_elem.text if guid_elem is not None else link_elem.text, isPermaLink=False),
+                    pubDate=pub_date or datetime.datetime.now(datetime.timezone.utc)
+                )
+                items.append(rss_item)
         return items
     except ET.ParseError as e:
         print(f"Error loading RSS feed from {file_path}: {e}")
         return []
+
+def extract_image_from_content(content):
+    """Extract the first image URL from HTML content."""
+    if not content:
+        return None
+        
+    # Look for img tags with src attribute
+    img_pattern = re.compile(r'<img[^>]+src=["\'](https?://[^"\']+)["\'][^>]*>')
+    match = img_pattern.search(content)
+    if match:
+        return match.group(1)
+    
+    # Look for media:content or media:thumbnail tags
+    media_pattern = re.compile(r'<media:(?:content|thumbnail)[^>]+url=["\'](https?://[^"\']+)["\'][^>]*>')
+    match = media_pattern.search(content)
+    if match:
+        return match.group(1)
+        
+    return None
 
 def create_reformatted_rss(original_url, output_file, archive_prefix="https://archive.is/newest/"):
     """
@@ -69,6 +112,42 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
 
                 item_title = entry.get('title', 'No Title')
                 item_description = entry.get('summary', entry.get('description', 'No Description'))
+                
+                # Extract header image
+                image_url = None
+                
+                # Check for media:content or media:thumbnail
+                if 'media_content' in entry and entry.media_content:
+                    for media in entry.media_content:
+                        if 'url' in media:
+                            image_url = media['url']
+                            break
+                
+                # Check for media:thumbnail
+                if not image_url and 'media_thumbnail' in entry and entry.media_thumbnail:
+                    for media in entry.media_thumbnail:
+                        if 'url' in media:
+                            image_url = media['url']
+                            break
+                
+                # Check for enclosures (often used for images)
+                if not image_url and 'enclosures' in entry and entry.enclosures:
+                    for enclosure in entry.enclosures:
+                        if 'url' in enclosure and enclosure.get('type', '').startswith('image/'):
+                            image_url = enclosure['url']
+                            break
+                
+                # Try to extract from content if still no image
+                if not image_url:
+                    content = entry.get('content', [{'value': ''}])[0].get('value', '')
+                    if not content:
+                        content = item_description
+                    image_url = extract_image_from_content(content)
+                
+                # Add image to description if found
+                if image_url:
+                    item_description = f'<img src="{image_url}" style="max-width:100%; height:auto; display:block; margin-bottom:15px;" />\n{item_description}'
+                
                 item_guid_str = entry.get('id', new_link)
 
                 published_time_struct = entry.get('published_parsed')
@@ -110,7 +189,6 @@ def create_reformatted_rss(original_url, output_file, archive_prefix="https://ar
 
     except Exception as e:
         print(f"Error processing feed {original_url}: {e}")
-
 
 def process_feeds_from_file(feed_file, archive_prefix="https://archive.is/newest/"):
     """
