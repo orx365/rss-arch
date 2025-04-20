@@ -1,4 +1,4 @@
-name: Update RSS Feeds & Deploy Site
+name: Update RSS Feeds
 
 on:
   schedule:
