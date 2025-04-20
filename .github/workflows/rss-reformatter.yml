@@ -33,6 +33,7 @@ jobs:
         mkdir -p output
         python3 rss_reformatter.py --feed-file feeds.txt
         
+    # Just commit the changes to the repo
     - name: Commit and push changes
       run: |
         git config --global user.name 'GitHub Actions'
@@ -40,45 +41,55 @@ jobs:
         git add output/
         git commit -m "Update RSS feeds - $(date)" || echo "No changes to commit"
         git push
-
-  deploy-to-pages:
-    needs: reformat-rss
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          ref: main
-      
-      # Create a temporary directory to hold the complete site structure
-      - name: Prepare site directory
-        run: |
-          # Create a temporary directory for the whole site
-          mkdir -p _site
+    # Download the current _site artifact for modification
+    - name: Download current site artifact
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const artifacts = await github.rest.actions.listArtifactsForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo
+          });
           
-          # Copy all website files to _site (excluding .git, .github, etc.)
-          rsync -av --exclude='.git' --exclude='.github' --exclude='_site' ./ _site/
+          const matchArtifact = artifacts.data.artifacts.find((artifact) => {
+            return artifact.name === "github-pages" && artifact.workflow_run.head_branch === 'main';
+          });
           
-          # Make sure output directory exists in _site
-          mkdir -p _site/output
+          if (!matchArtifact) {
+            core.setFailed('No github-pages artifact found!');
+            return;
+          }
           
-          # Copy latest RSS files (they should be fresher in the repo after the previous job)
-          cp -r output/* _site/output/
+          const download = await github.rest.actions.downloadArtifact({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            artifact_id: matchArtifact.id,
+            archive_format: 'zip'
+          });
+          
+          require('fs').writeFileSync('site.zip', Buffer.from(download.data));
+      continue-on-error: true
+
+    - name: Extract current site
+      run: |
+        mkdir -p _site
+        unzip -o site.zip -d _site || echo "No site archive found, will create new one"
+      continue-on-error: true
       
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+    - name: Update RSS files in site
+      run: |
+        mkdir -p _site/output
+        cp -r output/* _site/output/
       
-      # Upload the ENTIRE site, not just output directory
-      - name: Upload entire site
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-          retention-days: 1
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
       
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    - name: Upload updated artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: _site
+      
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
