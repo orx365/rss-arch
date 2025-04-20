@@ -13,7 +13,7 @@ permissions:
   id-token: write
 
 jobs:
-  RSS_Reformatter:
+  update-and-deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -47,7 +47,7 @@ jobs:
         git commit -m "Update RSS feeds - $(date)" || echo "No changes to commit"
         git push
 
-  Build_and_Deploy:
+    # PART 2: Build and Deploy Site
     - name: Set up Ruby and Jekyll
       uses: actions/setup-ruby@v1
       with:
