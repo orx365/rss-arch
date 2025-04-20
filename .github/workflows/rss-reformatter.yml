@@ -1,9 +1,11 @@
-name: RSS Feed Update and Deploy
+name: Update RSS Feeds & Deploy Site
 
 on:
   schedule:
     - cron: '0 */4 * * *'  # Every 4 hours
-  workflow_dispatch:
+  push:
+    branches: [main]       # On code changes
+  workflow_dispatch:       # Manual triggering
 
 permissions:
   contents: write
@@ -11,19 +13,23 @@ permissions:
   id-token: write
 
 jobs:
-  reformat-rss:
+  RSS_Reformatter:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
+    # PART 1: Update RSS Feeds
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
         
-    - name: Install dependencies
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install requests feedparser PyRSS2Gen
@@ -33,63 +39,46 @@ jobs:
         mkdir -p output
         python3 rss_reformatter.py --feed-file feeds.txt
         
-    # Just commit the changes to the repo
-    - name: Commit and push changes
+    - name: Commit RSS feed changes
       run: |
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'actions@github.com'
         git add output/
         git commit -m "Update RSS feeds - $(date)" || echo "No changes to commit"
         git push
-    
-    # Download the current _site artifact for modification
-    - name: Download current site artifact
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const artifacts = await github.rest.actions.listArtifactsForRepo({
-            owner: context.repo.owner,
-            repo: context.repo.repo
-          });
-          
-          const matchArtifact = artifacts.data.artifacts.find((artifact) => {
-            return artifact.name === "github-pages" && artifact.workflow_run.head_branch === 'main';
-          });
-          
-          if (!matchArtifact) {
-            core.setFailed('No github-pages artifact found!');
-            return;
-          }
-          
-          const download = await github.rest.actions.downloadArtifact({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            artifact_id: matchArtifact.id,
-            archive_format: 'zip'
-          });
-          
-          require('fs').writeFileSync('site.zip', Buffer.from(download.data));
-      continue-on-error: true
 
-    - name: Extract current site
+  Build_and_Deploy:
+    - name: Set up Ruby and Jekyll
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '3.1'  # Use a valid Ruby version
+        
+    - name: Build with Jekyll
+      uses: actions/jekyll-build-pages@v1
+      with:
+        source: .
+        destination: ./_site
+        future: false
+        build_revision: ${{ github.sha }}
+        verbose: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Check for symlinks
       run: |
-        mkdir -p _site
-        unzip -o site.zip -d _site || echo "No site archive found, will create new one"
-      continue-on-error: true
-      
-    - name: Update RSS files in site
-      run: |
-        mkdir -p _site/output
-        cp -r output/* _site/output/
-      
+        echo "Checking for symlinks in _site directory"
+        find _site -type l || echo "No symlinks found"
+
+    - name: List _site contents
+      run: ls -la _site
+
     - name: Setup Pages
       uses: actions/configure-pages@v4
-      
-    - name: Upload updated artifact
+
+    - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v3
       with:
         path: _site
-      
+
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
