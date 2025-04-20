@@ -51,7 +51,7 @@ jobs:
     - name: Set up Ruby and Jekyll
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: '3.1'  # Use a valid Ruby version
+        ruby-version: '3.1.4'  # Use a valid Ruby version
         
     - name: Build with Jekyll
       uses: actions/jekyll-build-pages@v1
