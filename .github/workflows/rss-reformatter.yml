@@ -3,8 +3,7 @@ name: Update RSS Feeds & Deploy Site
 on:
   schedule:
     - cron: '0 */4 * * *'  # Every 4 hours
-  push:
-    branches: [main]       # On code changes
+
   workflow_dispatch:       # Manual triggering
 
 permissions:
