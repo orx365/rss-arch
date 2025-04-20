@@ -1,12 +1,8 @@
 name: RSS Feed Update and Deploy
 
-# Set when the workflow will run
 on:
   schedule:
-    # WINTER TIME - 0 5-17/4 * * * # Every 4 hours between 5 AM and 5 PM UTC
-    # SUMMER TIME - 0 4-16/4 * * * # Every 4 hours between 4 AM and 4 PM UTC
-    - cron: '0 */4 * * *'  # Every 4 hours between 4 AM and 4 PM UTC
-  # Optional: Allow manual triggering
+    - cron: '0 */4 * * *'  # Every 4 hours
   workflow_dispatch:
 
 permissions:
@@ -34,12 +30,8 @@ jobs:
         
     - name: Run RSS reformatter
       run: |
-        # Create output directory
         mkdir -p output
-        
-        # Add your feeds here - examples for different sites
         python3 rss_reformatter.py --feed-file feeds.txt
-        # Add more feeds as needed
         
     - name: Commit and push changes
       run: |
@@ -60,16 +52,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: main  # Ensure we get the latest commits including those from the previous job
+          ref: main
+      
+      # Create a temporary directory to hold the complete site structure
+      - name: Prepare site directory
+        run: |
+          # Create a temporary directory for the whole site
+          mkdir -p _site
+          
+          # Copy all website files to _site (excluding .git, .github, etc.)
+          rsync -av --exclude='.git' --exclude='.github' --exclude='_site' ./ _site/
+          
+          # Make sure output directory exists in _site
+          mkdir -p _site/output
+          
+          # Copy latest RSS files (they should be fresher in the repo after the previous job)
+          cp -r output/* _site/output/
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
-      - name: Upload RSS files only
+      # Upload the ENTIRE site, not just output directory
+      - name: Upload entire site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: output
-          retention-days: 1  # Minimum retention
+          path: _site
+          retention-days: 1
       
       - name: Deploy to GitHub Pages
         id: deployment
