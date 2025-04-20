@@ -3,8 +3,7 @@ name: GitHub Pages - Build and Deploy
 on:
   push:
     branches: [main] # Or your default branch
-    paths-ignore:
-      - 'output/**'       # Ignore changes in the output folder
+       # Ignore changes in the output folder
 
   workflow_dispatch: # Optional: Allows manual triggering
 
