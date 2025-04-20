@@ -1,16 +1,18 @@
-name: RSS Feed Update
+name: RSS Feed Update and Deploy
 
 # Set when the workflow will run
 on:
   schedule:
-    # This runs at 6:00 UTC every day (adjust as needed) until 22:00 UTC every 2 hours
-    # Adjust the cron expression as needed
-    - cron: '5 4-20/2 * * *'
+    # WINTER TIME - 0 5-17/4 * * * # Every 4 hours between 5 AM and 5 PM UTC
+    # SUMMER TIME - 0 4-16/4 * * * # Every 4 hours between 4 AM and 4 PM UTC
+    - cron: '0 */4 * * *'  # Every 4 hours between 4 AM and 4 PM UTC
   # Optional: Allow manual triggering
   workflow_dispatch:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   reformat-rss:
@@ -46,3 +48,29 @@ jobs:
         git add output/
         git commit -m "Update RSS feeds - $(date)" || echo "No changes to commit"
         git push
+
+  deploy-to-pages:
+    needs: reformat-rss
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: main  # Ensure we get the latest commits including those from the previous job
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload RSS files only
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: output
+          retention-days: 1  # Minimum retention
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
