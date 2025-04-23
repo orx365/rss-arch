@@ -1,5 +1,5 @@
 https://www.ft.com/myft/following/dcb550c0-d02b-46d7-a44a-294243b7f157.rss output/ft-home.xml ft.com
-http://www.economist.com/rss/finance_and_economics_rss.xml output/economist.xml economist.com
+https://www.economist.com/finance-and-economics/rss.xml output/economist.xml economist.com
 https://feeds.content.dowjones.io/public/rss/RSSWorldNews output/wsj_world.xml wsj.com
 https://feeds.content.dowjones.io/public/rss/socialeconomyfeed output/wsj_econ.xml wsj.com
 https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml output/nyt_econ.xml nytimes.com
