@@ -3,7 +3,7 @@
 [![Access Financial Times Feed](https://img.shields.io/badge/Financial%20Times-Access%20RSS-blue)](output/ft-home.xml)
 [![Access The Economist Feed](https://img.shields.io/badge/The%20Economist-Access%20RSS-blue)](output/economist.xml)
 
-## RSS Archive Proxy
+## RSS Archive Linker
 
 This project automatically **fetches and reformats RSS feeds** from select news sources using a script that runs periodically. The output provides **updated RSS feeds** that can be easily added to your favorite RSS reader app. Article links are modified to go through `archive.is`, allowing you to *usually* access content without a direct subscription. **Feeds are automatically updated every 4 hours.**
 
