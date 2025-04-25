@@ -3,44 +3,45 @@
 [![Access Financial Times Feed](https://img.shields.io/badge/Financial%20Times-Access%20RSS-blue)](output/ft-home.xml)
 [![Access The Economist Feed](https://img.shields.io/badge/The%20Economist-Access%20RSS-blue)](output/economist.xml)
 
+## RSS Feed Archiver via `archive.is`
 
+This project automatically **fetches and reformats RSS feeds** from select news sources using a script that runs periodically. The output provides **updated RSS feeds** that can be easily added to your favorite RSS reader app. Article links are modified to go through `archive.is`, allowing you to *usually* access content without a direct subscription. **Feeds are automatically updated every 4 hours.**
 
-## About
-
-This project automates the *fetching and reformatting of RSS feeds* from select news sources. The output bellow are formater **RSS feeds** one can add to a **RSS reader app**. The article links go through archive.is, so you can usually read them without a subscription. **Feeds get automatically updated on a 4 hour basis to feature the latest information.** 
-
-> **Disclaimer** : *Journalism plays a vital role in the healthy functioning of our society. This thought came to me during a time when I couldn't afford access to the media I relied on. I also have concerns about getting information from social media, since I believe there is a conflict of interest between the social media platform and the information provider. Please use this tool responsibly.*
+> **Important Disclaimer:** This project automatically modifies RSS feeds every few hours, replacing original article links with `archive.is` links. **This process does not involve hosting any article content.** Users bear full responsibility for their interaction with the linked content and must respect copyright and website terms of service. The value of journalism is understood.
 
 ## Available Feeds
 
-The following RSS feeds are currently processed by this project: 
+The following RSS feeds are currently processed by this project:
 
-- **[Financial Times - (FT)](./output/ft-home.xml)**
+-   **[Financial Times - (FT)](./output/ft-home.xml)**
 
-  URL → `https://orx365.github.io/rss-arch/output/ft-home.xml`
+    URL → `https://orx365.github.io/rss-arch/output/ft-home.xml`
 
-- **[The Economist](./output/economist.xml)** - (RSS follows the *Finance & Economic* topics)
-  
-  URL →  `https://orx365.github.io/rss-arch/output/economist.xml`
+-   **[The Economist](./output/economist.xml)** - (RSS follows the *Finance & Economic* topics)
 
-- **[The New York Times - (Economy)](https://orx365.github.io/rss-arch/output/nyt_econ.xml)**
+    URL → `https://orx365.github.io/rss-arch/output/economist.xml`
 
-  URL → `https://orx365.github.io/rss-arch/output/nyt_econ.xml`
+-   **[The New York Times - (Economy)](https://orx365.github.io/rss-arch/output/nyt_econ.xml)**
 
-- **The Wall Street Journal** →  [`World News`](./output/wsj_world.xml) , [`Economy`](./output/wsj_econ.xml)
+    URL → `https://orx365.github.io/rss-arch/output/nyt_econ.xml`
 
-  World News →  `https://orx365.github.io/rss-arch/output/wsj_world.xml`
-  
-  Economy →  `https://orx365.github.io/rss-arch/output/wsj_econ.xml`
+-   **The Wall Street Journal** → [`World News`](./output/wsj_world.xml), [`Economy`](./output/wsj_econ.xml)
 
+    World News → `https://orx365.github.io/rss-arch/output/wsj_world.xml`
 
+    Economy → `https://orx365.github.io/rss-arch/output/wsj_econ.xml`
 
 ---
+
+## How to Use
+
+1.  Copy the Feed URL of the news source you are interested in from the "Available Feeds" section above.
+2.  Paste this URL into your preferred RSS reader application (e.g., Reeder, feeeed).
 
 **Recommended RSS Readers** - [**Reeder**](https://reeder.app) and [**feeeed**](https://feeeed.nateparrott.com)
 
-More detailed breakdown of news sources (into specific topics or parts of RSS feeds) may be built someday. It may however be simpler if you just [`clone this repo`](colophon.md) and choose you own RSS feeds. A simple description of this project is available at [**colophon**](colophon.md). It is propably the best and most efficent way for you to go forward. *Have fun*...
+For highly customized RSS feeds or if you'd like to host your own version of this project [`clone this repo`](colophon.md). A basic project overview can be found in **[colophon](colophon.md)**. This offers the most efficient way to tailor the feeds to your specific needs.
 
----
+## License
 
-<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://orx365.github.io/rss-arch/">rss-arch</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://orx365.github.io/">orx365</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""></a></p>
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
