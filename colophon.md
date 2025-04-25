@@ -4,7 +4,6 @@ This project provides an automated method to fetch and rewrite links within spec
 
 The system is designed for flexible configuration. Users can modify the `feeds.txt` file to manage the processed RSS sources or adjust the target archiving service according to their needs and preferences. _This project focuses on the technical transformation of RSS feed links and does not host or distribute original article content. Users are solely responsible for their interaction with the linked content and must ensure their usage complies with all applicable copyright laws and the terms of service of accessed websites. The importance of supporting journalism is acknowledged._
 
----
 
 ## Setup Instructions
 
