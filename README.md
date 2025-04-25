@@ -1,9 +1,9 @@
+## RSS Archive Linker
+
 [![website](https://img.shields.io/badge/Github_Page-grey)](https://orx365.github.io/rss-arch/)
 [![Feeds Updated](https://img.shields.io/github/last-commit/orx365/rss-arch.svg?label=Feeds%20Updated)](#available-feeds)
 [![Access Financial Times Feed](https://img.shields.io/badge/Financial%20Times-Access%20RSS-blue)](output/ft-home.xml)
 [![Access The Economist Feed](https://img.shields.io/badge/The%20Economist-Access%20RSS-blue)](output/economist.xml)
-
-## RSS Archive Linker
 
 This project automatically **fetches and reformats RSS feeds** from select news sources using a script that runs periodically. The output provides **updated RSS feeds** that can be easily added to your favorite RSS reader app. Article links are modified to go through `archive.is`, allowing you to *usually* access content without a direct subscription. **Feeds are automatically updated every 4 hours.**
 
