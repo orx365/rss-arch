@@ -11,8 +11,8 @@ The system is designed to be easily expandable to additional news sources beyond
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/USERNAME/REPOSITORY.git
-cd REPOSITORY
+git clone https://github.com/orx365/rss-arch.git
+cd rss-arch
 ```
 
 ### 2. Install Dependencies
