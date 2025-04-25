@@ -40,7 +40,7 @@ https://www.theatlantic.com/feed/all/ output/atlantic.xml theatlantic.com
 - `[<domain>]` (optional): A domain filter to process only links from a specific domain.
 
 
-### 4. Run the Script Manually (Optional)**
+### 4. Run the Script Manually (Optional)
 You can run the script manually to test it:
 
 ```bash
@@ -66,8 +66,6 @@ To use the reformatted feeds:
 Copy the raw URLs of the output files (e.g., `https://raw.githubusercontent.com/USERNAME/REPOSITORY/main/output/ft-home.xml`).
 Add these URLs to your preferred RSS reader app or service.
 
-
---- 
 
 ## Summary
 
