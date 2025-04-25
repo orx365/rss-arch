@@ -33,7 +33,7 @@ The following RSS feeds are currently processed by this project:
 
 ---
 
-## How to Use
+### How to Use
 
 1.  Copy the Feed URL of the news source you are interested in from the "Available Feeds" section above.
 2.  Paste this URL into your preferred RSS reader application (e.g., Reeder, feeeed).
@@ -42,6 +42,6 @@ The following RSS feeds are currently processed by this project:
 
 For highly customized RSS feeds or if you'd like to host your own version of this project [`clone this repo`](colophon.md). A basic project overview can be found in **[colophon](colophon.md)**. This offers the most efficient way to tailor the feeds to your specific needs.
 
-## License
+### License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
