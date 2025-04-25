@@ -52,9 +52,9 @@ This will process all feeds listed in feeds.txt and save the reformatted feeds t
 
 ## Automating Updates with GitHub Actions
 
-The project is configured to update the feeds every 2 hours using GitHub Actions. The workflow file (`.github/workflows/rss_reformatter.yml`) is already set up to:
+The project is configured to update the feeds every 4 hours using GitHub Actions. The workflow file (`.github/workflows/rss_reformatter.yml`) is already set up to:
 
-- Run the script on a schedule (cron: `"0 */2 * * *"`).
+- Run the script on a schedule (cron: `"0 */4 * * *"`).
 - Process all feeds listed in feeds.txt.
 
 You don't need to do anything extra to enable this, as long as the repository is hosted on GitHub and GitHub Actions is enabled.
