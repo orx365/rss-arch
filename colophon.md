@@ -1,4 +1,4 @@
-# Automated RSS Link Rewriter
+## RSS Archive Linker - Colophon
 
 This project provides an automated method to fetch and rewrite links within specified RSS feeds, directing them to the `archive.is` service. Utilizing GitHub Actions, the process runs on a schedule to maintain updated feeds, accessible via standard RSS readers through the repository's raw content URLs.
 
