@@ -9,9 +9,13 @@ This project automatically **fetches and reformats RSS feeds** from select news 
 
 > **Important Disclaimer:** This project automatically modifies RSS feeds every few hours, replacing original article links with `archive.is` links. **This process does not involve hosting any article content.** Users bear full responsibility for their interaction with the linked content and must respect copyright and website terms of service. The value of journalism is understood.
 
+For highly customized RSS feeds or if you'd like to host your own version of this project [`clone this repo`](colophon.md). A basic project overview can be found in **[colophon](colophon.md)**. This offers the most efficient way to tailor the feeds to your specific needs.
+
+**Recommended RSS Readers** - [**Reeder**](https://reeder.app) and [**feeeed**](https://feeeed.nateparrott.com)
+
 ## Available Feeds
 
-The following RSS feeds are currently processed by this project:
+#### The following RSS feeds are currently processed by this project:
 
 -   **[Financial Times - (FT)](./output/ft-home.xml)**
 
@@ -31,17 +35,9 @@ The following RSS feeds are currently processed by this project:
 
     Economy → `https://orx365.github.io/rss-arch/output/wsj_econ.xml`
 
----
 
-### How to Use
 
-1.  Copy the Feed URL of the news source you are interested in from the "Available Feeds" section above.
-2.  Paste this URL into your preferred RSS reader application (e.g., Reeder, feeeed).
 
-**Recommended RSS Readers** - [**Reeder**](https://reeder.app) and [**feeeed**](https://feeeed.nateparrott.com)
-
-For highly customized RSS feeds or if you'd like to host your own version of this project [`clone this repo`](colophon.md). A basic project overview can be found in **[colophon](colophon.md)**. This offers the most efficient way to tailor the feeds to your specific needs.
-
-### License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
