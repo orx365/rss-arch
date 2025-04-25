@@ -1,8 +1,8 @@
-# RSS Archive Reformatter
+# Automated RSS Link Rewriter
 
-This project automatically fetches RSS feeds from paywalled news sources and reformats the links to use archive.is for easier reading. Using GitHub Actions, it runs on a scheduled basis to keep feeds updated, making them accessible through any standard RSS reader. The reformatted feeds can be accessed directly from this repository's raw content URLs without requiring any frontend interface.
+This project provides an automated method to fetch and rewrite links within specified RSS feeds, directing them to the `archive.is` service. Utilizing GitHub Actions, the process runs on a schedule to maintain updated feeds, accessible via standard RSS readers through the repository's raw content URLs.
 
-The system is designed to be easily expandable to additional news sources beyond the initial configuration. By modifying the `feeds.txt` file, you can add or remove sources as needed, or change the archiving service used for the links.
+The system is designed for flexible configuration. Users can modify the `feeds.txt` file to manage the processed RSS sources or adjust the target archiving service according to their needs and preferences. _This project focuses on the technical transformation of RSS feed links and does not host or distribute original article content. Users are solely responsible for their interaction with the linked content and must ensure their usage complies with all applicable copyright laws and the terms of service of accessed websites. The importance of supporting journalism is acknowledged._
 
 ---
 
@@ -66,7 +66,7 @@ To use the reformatted feeds:
 
 Copy the raw URLs of the output files (e.g., `https://raw.githubusercontent.com/USERNAME/REPOSITORY/main/output/ft-home.xml`).
 Add these URLs to your preferred RSS reader app or service.
-The feeds will automatically update every 2 hours, ensuring you always have the latest content.
+
 
 --- 
 
@@ -77,4 +77,4 @@ The feeds will automatically update every 2 hours, ensuring you always have the 
 3. Let GitHub Actions handle the updates automatically.
 4. Use the raw URLs of the reformatted feeds in your RSS reader.
 
-This setup ensures a scalable and automated way to access paywalled RSS feeds reformatted for easier reading.
+This setup provides a scalable and automated method for maintaining RSS feeds with links directed through `archive.is`.
