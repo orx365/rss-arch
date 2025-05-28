@@ -8,7 +8,7 @@ from urllib.parse import urlparse, urlunparse
 import re
 from xml.sax.saxutils import escape
 
-def get_feed_logo(feed_data, base_domain=""):
+def get_feed_logo(feed_data):
     """Extracts the feed logo information."""
     # Prioritize the <image> tag
     if 'image' in feed_data.feed and 'url' in feed_data.feed.image:
@@ -24,15 +24,6 @@ def get_feed_logo(feed_data, base_domain=""):
             title=feed_data.feed.get('title', ''), # Use feed title as fallback
             link=feed_data.feed.get('link', '') # Use feed link as fallback
         )
-    # Provide domain-specific default logos based on base_domain
-    elif base_domain:
-        domain = base_domain.replace('https://', '').replace('http://', '').lower()
-        if 'ft.com' in domain:
-            return PyRSS2Gen.Image(
-                url="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured-ftlogo-tiny-ps?source=reader.com&width=120&height=120&format=png",
-                title=feed_data.feed.get('title', 'Financial Times'),
-                link="https://www.ft.com/"
-            )
     return None
 
 def extract_image_and_credit(entry):
@@ -168,7 +159,7 @@ def create_reformatted_rss(original_url, output_file, base_domain, archive_prefi
         feed_data = feedparser.parse(response.content)
 
         # 2. Extract Feed Logo
-        feed_logo = get_feed_logo(feed_data, base_domain)
+        feed_logo = get_feed_logo(feed_data)
 
         # 3. Process Feed Items
         # ... (item processing loop remains the same) ...
