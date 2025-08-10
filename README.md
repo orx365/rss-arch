@@ -11,7 +11,7 @@ This project automatically **fetches and reformats RSS feeds** from select news 
 
 For highly customized RSS feeds or if you'd like to host your own version of this project [`clone this repo`](colophon.md). A basic project overview can be found in **[colophon](colophon.md)**. This offers the most efficient way to tailor the feeds to your specific needs.
 
-**Recommended RSS Readers** - [**Reeder**](https://reeder.app) and [**feeeed**](https://feeeed.nateparrott.com)
+**Recommended RSS Reader** - [**Reeder**](https://reeder.app)
 
 ## Available Feeds
 
@@ -36,7 +36,13 @@ For highly customized RSS feeds or if you'd like to host your own version of thi
     Economy → `https://orx365.github.io/rss-arch/output/wsj_econ.xml`
 
 
-
+| Publication | RSS Link |
+| :--- | :--- |
+| **[Financial Times](https://orx365.github.io/rss-arch/output/ft-home.xml)** | `https://orx365.github.io/rss-arch/output/ft-home.xml` |
+| **[The Economist](https://orx365.github.io/rss-arch/output/economist.xml)** | `https://orx365.github.io/rss-arch/output/economist.xml` |
+| **[The New York Times - (Economy)](https://orx365.github.io/rss-arch/output/nyt_econ.xml)** | `https://orx365.github.io/rss-arch/output/nyt_econ.xml` |
+| **[The Wall Street Journal - (World News)](https://orx365.github.io/rss-arch/output/wsj_world.xml)** | `https://orx365.github.io/rss-arch/output/wsj_world.xml` |
+| **[The Wall Street Journal - (Economy)](https://orx365.github.io/rss-arch/output/wsj_econ.xml)** | `https://orx365.github.io/rss-arch/output/wsj_econ.xml` |
 
 ## License
 
