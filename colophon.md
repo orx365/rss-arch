@@ -28,13 +28,6 @@ The feeds.txt file contains the list of RSS feeds to process. Each line should f
 <feed_url> <output_file> [<domain>]
 ```
 
-Example:
-```
-https://www.ft.com/rss/home.xml output/ft-home.xml ft.com
-https://www.economist.com/rss economist.xml output/economist.com
-https://www.theatlantic.com/feed/all/ output/atlantic.xml theatlantic.com
-```
-
 - `<feed_url>`: The URL of the RSS feed.
 - `<output_file>`: The path where the reformatted RSS feed will be saved.
 - `[<domain>]` (optional): A domain filter to process only links from a specific domain.
